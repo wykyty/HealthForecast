@@ -1,0 +1,27 @@
+# Test your FastAPI endpoints
+
+GET http://127.0.0.1:8080/
+Accept: application/json
+
+###
+
+GET http://127.0.0.1:8080/health/{name}
+Accept: application/json
+
+###
+
+GET http://127.0.0.1:8080/health/users/{id}
+Accept: application/json
+
+###
+
+POST http://127.0.0.1:8080/health/users/item
+Content-Type: application/json
+
+{
+  "username": "15009098888",
+  "password": "aaa123",
+  "nickname": "Alice"
+}
+
+###

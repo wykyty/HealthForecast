@@ -2,9 +2,17 @@ from contextlib import contextmanager
 from sqlalchemy import create_engine, Column, INTEGER, VARCHAR, ForeignKey
 from sqlalchemy.orm import sessionmaker, scoped_session
 from sqlalchemy.orm import declarative_base
+from pydantic import BaseModel
 
 SQLALCHEMY_DATABASE_URL = "mysql+pymysql://health:Health2024***@116.204.83.200:3306/healthdb"
 Base = declarative_base()
+
+
+# 定义POST请求参数模型
+class Item(BaseModel):
+    username: str
+    password: str
+    nickname: str
 
 
 # 用户表
@@ -77,11 +85,10 @@ class dbSession:
         with self.get_db() as session:
             return session.query(User).filter_by(id=user_id).all()  # 获取用户信息
 
-    def create_user(self, id: int, name: str):
-        with self.get_db() as session:
-            user = User(id=id, username=name, password="")
-            session.add(user)
-            return user.id
+    def create_user(self, item: Item):
+        user = User(username=item.username, password=item.password, nickname=item.nickname)
+        self.add(user)
+        return user
 
 
 if __name__ == "__main__":

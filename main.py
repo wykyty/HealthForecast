@@ -20,11 +20,9 @@ async def get_userInfo(id: int):
     user_info = dbsession.get_userById(id)
     return user_info
 
-@app.post("/health/users/{id}")
-async def create_user(id: int, name: str):
-    user_info = dbsession.get_userById(id)
-    if user_info is None:
-        dbsession.create_user(id, name)
-        return {"message": "User created"}
-    else:
-        return {"message": "User already exists"}
+
+@app.post("/health/users/item")
+async def create_user(item: db.Item):
+    dbsession.create_user(item)
+    return item
+
