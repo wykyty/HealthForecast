@@ -1,8 +1,11 @@
 from fastapi import FastAPI
-import db
+from app.db.session import dbSession
+from app.models.schemas import UserCreate
+from app.api.users import users_router
 
 app = FastAPI()
-dbsession = db.dbSession()
+app.include_router(users_router)
+dbsession = dbSession()
 
 
 @app.get("/")
@@ -22,7 +25,7 @@ async def get_userInfo(id: int):
 
 
 @app.post("/health/users/item")
-async def create_user(item: db.Item):
+async def create_user(item: UserCreate):
     dbsession.create_user(item)
     return item
 

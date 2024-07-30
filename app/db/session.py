@@ -1,36 +1,9 @@
 from contextlib import contextmanager
-from sqlalchemy import create_engine, Column, INTEGER, VARCHAR, ForeignKey
+from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
-from sqlalchemy.orm import declarative_base
-from pydantic import BaseModel
+from app.models.user import UserInDB as User
 
 SQLALCHEMY_DATABASE_URL = "mysql+pymysql://health:Health2024***@116.204.83.200:3306/healthdb"
-Base = declarative_base()
-
-
-# 定义POST请求参数模型
-class Item(BaseModel):
-    username: str
-    password: str
-    nickname: str
-
-
-# 用户表
-class User(Base):
-    __tablename__ = "users"
-    id = Column(INTEGER, primary_key=True, nullable=False, unique=True, index=True)  # 用户ID 索引
-    username = Column(VARCHAR(20),nullable=False, unique=True, index=True)  # 用户账号：手机号
-    password = Column(VARCHAR(20), nullable=False)  # 用户密码
-    nickname = Column(VARCHAR(20), nullable=False)  # 用户昵称
-    checkup_currency = Column(INTEGER, default=0)  # 用户体检币数量
-
-
-# 体检记录表
-class Checkup(Base):
-    __tablename__ = "checkups"
-    id = Column(INTEGER, primary_key=True, nullable=False, unique=True, index=True)  # 体检记录ID
-    user_id = Column(INTEGER, ForeignKey("users.id"), nullable=False, index=True)  # 体检用户ID
-    checkup = Column(VARCHAR(20), nullable=False)   # 体检类型
 
 
 # 创建数据库连接类
@@ -85,15 +58,3 @@ class dbSession:
         with self.get_db() as session:
             return session.query(User).filter_by(id=user_id).all()  # 获取用户信息
 
-    def create_user(self, item: Item):
-        user = User(username=item.username, password=item.password, nickname=item.nickname)
-        self.add(user)
-        return user
-
-
-if __name__ == "__main__":
-    dbsession = dbSession()
-
-    # 插入数据
-    user = User(username="12345678901", password="123456", nickname="yty")
-    dbsession.add(user)

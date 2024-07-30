@@ -1,14 +1,14 @@
 import requests
 
-url = "http://127.0.0.1:8080/health/users/item"
+url = "http://127.0.0.1:8080/register"
 headers = {
     'Content-Type': 'application/json'
 }
 
 data = {
-    "username": "19044449870",
-    "password": "bd123456",
-    "nickname": "Bob"
+    "username": "19099933340",
+    "password": "bd123sdf6",
+    "nickname": "Candy"
 }
 
 response = requests.post(url, headers=headers, json=data)

@@ -1,16 +1,17 @@
 # HealthForecast
 
-db.py: 
-建立了用户表、体检表
-数据库连接类
-用来对数据库进行操作
+## app
+main.py：主程序
+api:
+    users.py：用户相关接口
+db:
+    session.py：数据库连接
+models:
+    user.py：用户数据库模型
+    schema.py：数据库模型序列化
+services:
+    user_service.py：用户相关业务逻辑
 
-main.py:
-实现get请求、post请求
-
-test_main.http:
-测试http请求用例
-
-test_post.py:
-测试post请求用例，可接收用户输入参数，并将参数插入数据库
-
+## tests
+test_main.http：测试用例
+test_post.py: 测试post请求
