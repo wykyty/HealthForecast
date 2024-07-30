@@ -53,8 +53,4 @@ class dbSession:
         with self.get_db() as session:  # 获取数据库连接
             return session.query(model).filter_by(**kwargs).all()  # 查询数据
 
-    # 获取用户信息
-    def get_userById(self, user_id: int):
-        with self.get_db() as session:
-            return session.query(User).filter_by(id=user_id).all()  # 获取用户信息
 
