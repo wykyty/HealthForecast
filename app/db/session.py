@@ -1,7 +1,7 @@
 from contextlib import contextmanager
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, and_
 from sqlalchemy.orm import sessionmaker, scoped_session
-from app.models.user import UserInDB as User
+
 
 SQLALCHEMY_DATABASE_URL = "mysql+pymysql://health:Health2024***@116.204.83.200:3306/healthdb"
 
@@ -25,7 +25,7 @@ class dbSession:
             session.close()
 
     # 插入数据
-    def add(self, record):
+    def addRecord(self, record):
         with self.get_db() as session:  # 获取数据库连接
             session.add(record)  # 插入数据
             session.commit()  # 提交事务
@@ -33,24 +33,23 @@ class dbSession:
             return record.id  # 返回插入数据的id
 
     # 删除数据
-    def delete(self, record):
+    def deleteRecord(self, record):
         record_id = record.id  # 获取删除数据的id
         with self.get_db() as session:  # 获取数据库连接
             session.delete(record)  # 删除数据
             session.commit()  # 提交事务
             return record_id  # 返回删除数据的id
 
-    # 更新数据
-    def update(self, record):
-        record_id = record.id  # 获取更新数据的id
-        with self.get_db() as session:  # 获取数据库连接
-            session.update(record)  # 更新数据
-            session.commit()  # 提交事务
-            return record_id  # 返回更新数据的id
+
 
     # 查询数据
-    def query(self, model, **kwargs):
+    def queryByUsername(self, model, username: str):
         with self.get_db() as session:  # 获取数据库连接
-            return session.query(model).filter_by(**kwargs).all()  # 查询数据
+            return session.query(model).filter(model.username == username).first()  # 查询数据
+
+
+    def queryById(self, model, id: int):
+        with self.get_db() as session:
+            return session.query(model).filter(model.id == id).first()  # 查询数据
 
 

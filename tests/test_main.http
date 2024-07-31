@@ -10,7 +10,7 @@ Accept: application/json
 
 ###
 
-GET http://127.0.0.1:8080/health/users/20
+GET http://127.0.0.1:8080/health/users/28
 Accept: application/json
 
 ###
@@ -19,9 +19,11 @@ POST http://127.0.0.1:8080/health/users/item
 Content-Type: application/json
 
 {
-  "username": "1523456878",
+  "username": "12789457324",
   "password": "aaa123",
-  "nickname": "Alsde"
+  "nickname": "Example"
 }
 
 ###
+
+

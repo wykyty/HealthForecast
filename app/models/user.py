@@ -20,3 +20,6 @@ class Checkup(Base):
     id = Column(INTEGER, primary_key=True, nullable=False, unique=True, index=True)  # 体检记录ID
     user_id = Column(INTEGER, ForeignKey("users.id"), nullable=False, index=True)  # 体检用户ID
     checkup = Column(VARCHAR(20), nullable=False)   # 体检类型
+
+
+# Base.metadata.create_all(bind=engine)
