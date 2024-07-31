@@ -1,10 +1,10 @@
 from fastapi import FastAPI
 from app.models.schemas import UserCreate
 from app.api.users import users_router
-from services.user_service import create_user, get_userById
+from services.user_service import create_user, get_userByUsername
 
 app = FastAPI()
-app.include_router(users_router)
+app.include_router(users_router, prefix='/health/users')
 
 
 @app.get("/")

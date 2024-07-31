@@ -11,6 +11,14 @@ def create_user(user: UserCreate, db: Session = dbSession()):
     return db_user
 
 
+# 根据id获取用户
+def get_userById(id: int, db: Session = dbSession()):
+    user = db.query(UserInDB).filter(UserInDB.id == id).first()
+    return user
+
+
 # 根据用户名获取用户
-def get_userById(user_id: int, db: Session = dbSession()):
-    return db.query(UserInDB).filter(UserInDB.id == user_id).all()
+def get_userByUsername(username: str, db: Session = dbSession()):
+    return db.query(UserInDB).filter(UserInDB.username == username).all()
+
+
