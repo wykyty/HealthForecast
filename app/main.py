@@ -1,10 +1,15 @@
 from fastapi import FastAPI
 from app.models.schemas import UserCreate
 from app.api.users import users_router
-from services.user_service import create_user, get_userByUsername
+from app.services.user_service import create_user, get_userById
+
+from app.db.session import dbSession
+from app.models.user import Base
+
+Base.metadata.create_all(bind=dbSession().engine)
 
 app = FastAPI()
-app.include_router(users_router, prefix='/health/users')
+app.include_router(users_router, prefix='/health/user')
 
 
 @app.get("/")
@@ -19,12 +24,16 @@ async def say_hello(name: str):
 
 @app.get("/health/users/{id}")
 async def get_userInfo(id: int):
-    user_info = get_userById(id)
-    return user_info
+    user = get_userById(id)
+    return user
 
 
 @app.post("/health/users/item")
-async def create_user(item: UserCreate):
-    create_user(item)
-    return item
+async def createUser(item: UserCreate):
+    try:
+        db_user = create_user(item)
+        return db_user
+    except Exception as e:
+        return {"message": str(e)}
+
 

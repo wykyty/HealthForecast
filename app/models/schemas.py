@@ -5,7 +5,7 @@ from pydantic import BaseModel, validator
 class UserBase(BaseModel):
     username: str  # 手机号
     password: str
-    nickname: str
+    nickname: str = None  # 昵称
 
 
 # 用户创建类, POST请求参数校验
