@@ -5,8 +5,8 @@ from pydantic import BaseModel
 class AuthRequest(BaseModel):
     type: str   # login or register
     login_type: str = None  # password or examine
-    username: str = None  # 手机号
-    password: str = None  # 密码
+    phone_number: str = None  # 手机号
+    passwd: str = None  # 密码
 
 
 # # 认证响应表单
